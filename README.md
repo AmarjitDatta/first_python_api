@@ -1,27 +1,28 @@
 # First Python API
 
-A full-stack application with Python FastAPI backend, React frontend, and MongoDB database - all containerized with Docker.
+A full-stack weight tracking application with Python FastAPI backend, React frontend, and MongoDB database - all containerized with Docker.
 
 ## Features
 
-- **FastAPI Backend**: Python REST API with GET, POST, and DELETE endpoints
-- **React Frontend**: Interactive UI with real-time data table
-- **MongoDB Database**: Persistent storage for submitted names with timestamps
+- **FastAPI Backend**: Python REST API with GET and DELETE endpoints
+- **React Frontend**: Interactive UI with real-time weight history table
+- **MongoDB Database**: Persistent storage for weight entries with timestamps
 - **Docker Support**: Complete Docker setup for all three services
 - **CORS Enabled**: Frontend and backend communicate seamlessly
+- **Input Validation**: Ensures only valid weight values are accepted
 
 ## API Endpoints
 
-- **GET /** - Submit a name and get a personalized greeting
-  - Query Parameter: `name` (optional, defaults to "World")
-  - Response: `{"message": "Hello, World! My name is {name}"}`
-  - Also saves the name to MongoDB with timestamp
+- **GET /** - Save weight and get confirmation
+  - Query Parameter: `weight` (required, float in kg)
+  - Response: `{"message": "Weight X kg saved successfully!"}`
+  - Also saves the weight to MongoDB with timestamp
 
-- **GET /names** - Retrieve all saved names from database
-  - Response: `{"names": [{"name": "John", "timestamp": "2026-02-10T12:34:56"}]}`
+- **GET /weights** - Retrieve all saved weights from database
+  - Response: `{"weights": [{"weight": 75.5, "timestamp": "2026-02-10T12:34:56"}]}`
 
-- **DELETE /names** - Clear all names from database
-  - Response: `{"message": "Deleted X names"}`
+- **DELETE /weights** - Clear all weight entries from database
+  - Response: `{"message": "Deleted X weight entries"}`
 
 ## Quick Start
 
@@ -72,7 +73,7 @@ npm start
 ├── docker-compose.yml      # Multi-container orchestration (Backend, Frontend, MongoDB)
 └── frontend/               # React application
     ├── src/
-    │   ├── App.js         # Main React component with table display
+    │   ├── App.js         # Main React component with weight tracker
     │   └── App.css        # Styling
     ├── package.json       # Node dependencies
     └── Dockerfile         # Frontend Docker configuration
@@ -87,19 +88,19 @@ npm start
 
 ## Usage
 
-1. Enter your name in the text field
-2. Click "Submit"
-3. The API saves your name to MongoDB and returns a greeting
-4. View all submitted names in the table below
-5. Click "Clear All" to delete all names from the database
+1. Enter your weight in kilograms (supports decimals)
+2. Click "Save Weight"
+3. The API saves your weight to MongoDB with the current timestamp
+4. View your weight history in the table below (sorted by most recent)
+5. Click "Clear All" to delete all weight entries from the database
 
 ## Database Schema
 
-**Collection**: `names`
+**Collection**: `weights`
 
 ```json
 {
-  "name": "string",
+  "weight": "float (kg)",
   "timestamp": "ISO 8601 datetime string"
 }
 ```

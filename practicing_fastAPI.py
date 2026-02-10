@@ -18,28 +18,28 @@ app.add_middleware(
 # MongoDB connection
 MONGODB_URL = os.getenv("MONGODB_URL", "mongodb://localhost:27017")
 client = MongoClient(MONGODB_URL)
-db = client.namesdb
-names_collection = db.names
+db = client.weightsdb
+weights_collection = db.weights
 
 @app.get("/")
-def read_root(name: str = "World"):
-    # Save name to database with timestamp
-    name_entry = {
-        "name": name,
+def save_weight(weight: float):
+    # Save weight to database with timestamp
+    weight_entry = {
+        "weight": weight,
         "timestamp": datetime.utcnow().isoformat()
     }
-    names_collection.insert_one(name_entry)
+    weights_collection.insert_one(weight_entry)
     
-    return {"message": f"Hello, World! My name is {name}"}
+    return {"message": f"Weight {weight} kg saved successfully!"}
 
-@app.get("/names")
-def get_all_names():
-    # Retrieve all names from database
-    names = list(names_collection.find({}, {"_id": 0, "name": 1, "timestamp": 1}).sort("timestamp", -1))
-    return {"names": names}
+@app.get("/weights")
+def get_all_weights():
+    # Retrieve all weights from database
+    weights = list(weights_collection.find({}, {"_id": 0, "weight": 1, "timestamp": 1}).sort("timestamp", -1))
+    return {"weights": weights}
 
-@app.delete("/names")
-def clear_all_names():
-    # Clear all names from database
-    result = names_collection.delete_many({})
-    return {"message": f"Deleted {result.deleted_count} names"}
+@app.delete("/weights")
+def clear_all_weights():
+    # Clear all weights from database
+    result = weights_collection.delete_many({})
+    return {"message": f"Deleted {result.deleted_count} weight entries"}

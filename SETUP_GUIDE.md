@@ -1,6 +1,6 @@
-# Hello World API - Full Setup Guide
+# Weight Tracker API - Full Setup Guide
 
-This project contains a Python FastAPI backend and a React frontend.
+This project contains a Python FastAPI backend and a React frontend for tracking weight.
 
 ## Option 1: Running with Docker (Recommended)
 
@@ -18,6 +18,7 @@ docker-compose up --build
 This will:
 - Build and run the FastAPI backend on `http://localhost:8000`
 - Build and run the React frontend on `http://localhost:3000`
+- Start MongoDB database on `http://localhost:27017`
 
 To stop the containers:
 ```bash
@@ -66,16 +67,25 @@ The frontend will open at `http://localhost:3000`
 
 ## How to use
 
-1. Start both the backend and frontend services (either via Docker or locally)
-2. In the React app, enter your name in the text field
-3. Click "Submit" to send it to the API
-4. The API will return a message with your name
+1. Start all services (either via Docker or locally)
+2. In the React app, enter your weight in kilograms
+3. Click "Save Weight" to save it to the database
+4. View your weight history in the table below
+5. Click "Clear All" to delete all weight entries
 
-## API Endpoint
+## API Endpoints
 
 - **URL:** `http://localhost:8000/`
 - **Method:** GET
-- **Parameters:** `name` (optional, defaults to "World")
-- **Response:** `{"message": "Hello, World! My name is {name}"}`
+- **Parameters:** `weight` (required, float in kg)
+- **Response:** `{"message": "Weight X kg saved successfully!"}`
 
-Example: `http://localhost:8000/?name=John`
+Example: `http://localhost:8000/?weight=75.5`
+
+- **URL:** `http://localhost:8000/weights`
+- **Method:** GET
+- **Response:** List of all saved weights with timestamps
+
+- **URL:** `http://localhost:8000/weights`
+- **Method:** DELETE
+- **Response:** Confirmation of deleted entries
