@@ -11,10 +11,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
 }
 
 h1 {
   margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 form {
@@ -72,4 +78,81 @@ button:disabled {
   border: 2px solid #61dafb;
   padding: 20px;
   border-radius: 4px;
+}
+
+.names-section {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.names-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.clear-button {
+  background-color: #ff4444;
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+.clear-button:hover {
+  background-color: #cc0000;
+}
+
+.no-names {
+  color: #888;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.names-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1d24;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.names-table thead {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.names-table th {
+  padding: 15px;
+  font-weight: bold;
+  text-align: left;
+  font-size: 16px;
+}
+
+.names-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #3a3f4b;
+  font-size: 14px;
+}
+
+.names-table tbody tr:hover {
+  background-color: #2a2f3a;
+  transition: background-color 0.2s;
+}
+
+.names-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.names-table th:first-child,
+.names-table td:first-child {
+  text-align: center;
+  width: 60px;
+}
+
+.names-table th:last-child,
+.names-table td:last-child {
+  color: #aaa;
+  font-size: 13px;
 }

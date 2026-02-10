@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=namesdb
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
   backend:
     build: .
     ports:
@@ -8,8 +20,13 @@ services:
     container_name: fastapi-backend
     environment:
       - PYTHONUNBUFFERED=1
+      - MONGODB_URL=mongodb://mongodb:27017
     volumes:
       - .:/app
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
 
   frontend:
     build: ./frontend
@@ -20,3 +37,12 @@ services:
       - backend
     environment:
       - REACT_APP_API_URL=http://localhost:8000
+    networks:
+      - app-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
